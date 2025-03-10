@@ -1,23 +1,23 @@
 import mongoose, { Schema } from "mongoose";
 import { TPoll } from "./poll.interface";
 
-const PollSchema = new Schema<TPoll>(
-  {
-    question: { type: String, required: true },
-    options: [
-      {
-        text: { type: String, required: true },
-        votes: { type: Number, default: 0 },
-      },
-    ],
-    expiresAt: { type: Date, required: true },
-    showResultsAfterExpiry: { type: Boolean, default: true },
-    reactions: {
-      like: { type: Number, default: 0 },
-      trending: { type: Number, default: 0 },
-    },
+const pollSchema = new Schema<TPoll>({
+  question: {
+    type: String,
+    required: true,
   },
-  { timestamps: true }
-);
+  options: {
+    type: [String],
+    required: true,
+  },
+  expiresAt: {
+    type: Date,
+    required: true,
+  },
+  private: {
+    type: Boolean,
+    required: true,
+  },
+});
 
-export const Poll = mongoose.model<TPoll>("Poll", PollSchema);
+export const Poll = mongoose.model<TPoll>("Poll", pollSchema);
