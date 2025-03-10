@@ -5,6 +5,7 @@ import httpStatus from "http-status";
 
 const createPoll = catchAsync(async (req: Request, res: Response) => {
   const { question, options, expiresIn, privatePoll } = req.body;
+  // console.log("poll-body", req.body);
 
   const result = await PollServices.createPollIntoDB(
     question,

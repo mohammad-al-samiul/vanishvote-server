@@ -1,9 +1,9 @@
 import express from "express";
 import { PollController } from "./poll.controller";
 
-const router = express.Router();
+const pollRouter = express.Router();
 
-router.post("/create", PollController.createPoll);
-router.get("/:id", PollController.getPoll);
+pollRouter.post("/create", PollController.createPoll);
+pollRouter.get("/:id", PollController.getPoll);
 
-export default router;
+export default pollRouter;
