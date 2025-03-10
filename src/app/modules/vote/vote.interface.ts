@@ -1,7 +1,6 @@
-import { Types } from "mongoose";
+import mongoose from "mongoose";
 
 export type TVote = {
-  pollId: Types.ObjectId | string;
+  pollId: mongoose.Types.ObjectId;
   votedOption: string;
-  anonymousComment: string | null;
 };

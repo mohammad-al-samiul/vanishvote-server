@@ -3,28 +3,16 @@ import httpStatus from "http-status";
 import catchAsync from "../../utils/catchAsync";
 import { VoteServices } from "./vote.service";
 
-const voteOnPoll = catchAsync(async (req: Request, res: Response) => {
-  const { pollId, votedOption, anonymousComment } = req.body;
-
-  const result = await VoteServices.voteOnPoll(
-    pollId,
-    votedOption,
-    anonymousComment
-  );
-
-  if (!result) {
-    return res.status(httpStatus.BAD_REQUEST).json({
-      success: false,
-      message: "Invalid vote or poll expired",
-    });
-  }
-
-  res.status(httpStatus.CREATED).json({
-    success: true,
-    message: "Vote submitted successfully",
-  });
+const voteOnPollController = catchAsync(async (req: Request, res: Response) => {
+  const { pollId, votedOption } = req.body;
+  const vote = await VoteServices.voteOnPoll(pollId, votedOption);
+  if (!vote)
+    return res
+      .status(httpStatus.BAD_REQUEST)
+      .json({ success: false, message: "Invalid vote" });
+  res
+    .status(httpStatus.CREATED)
+    .json({ success: true, message: "Vote submitted" });
 });
 
-export const VoteController = {
-  voteOnPoll,
-};
+export const VoteController = { voteOnPollController };
