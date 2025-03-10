@@ -1,5 +1,6 @@
 import express from "express";
 import pollRouter from "../modules/polls/poll.route";
+import voteRouter from "../modules/vote/vote.route";
 
 const router = express.Router();
 
@@ -7,6 +8,10 @@ const moduleRoutes = [
   {
     path: "/poll",
     route: pollRouter,
+  },
+  {
+    path: "/vote",
+    route: voteRouter,
   },
 ];
 
