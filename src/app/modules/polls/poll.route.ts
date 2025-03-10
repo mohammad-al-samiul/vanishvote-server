@@ -1,3 +1,9 @@
-import express, { NextFunction, Request, Response } from "express";
+import express from "express";
+import { PollController } from "./poll.controller";
 
-const pollRouter = express.Router();
+const router = express.Router();
+
+router.post("/create", PollController.createPoll);
+router.get("/:id", PollController.getPoll);
+
+export default router;
