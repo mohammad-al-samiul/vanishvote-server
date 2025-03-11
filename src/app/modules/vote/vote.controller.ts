@@ -1,7 +1,7 @@
 import { Request, Response } from "express";
-import httpStatus from "http-status";
 import catchAsync from "../../utils/catchAsync";
 import { VoteServices } from "./vote.service";
+import httpStatus from "http-status";
 
 const voteOnPollController = catchAsync(async (req: Request, res: Response) => {
   const { pollId, votedOption } = req.body;

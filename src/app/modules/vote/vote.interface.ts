@@ -1,6 +1,12 @@
-import mongoose from "mongoose";
+import { Types } from "mongoose";
 
-export type TVote = {
-  pollId: mongoose.Types.ObjectId;
+export interface IVote {
+  pollId: Types.ObjectId | string;
   votedOption: string;
-};
+  createdAt: Date;
+}
+
+export interface IVoteDTO {
+  pollId: string;
+  votedOption: string;
+}
