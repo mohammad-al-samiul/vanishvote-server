@@ -12,17 +12,17 @@ const voteOnPoll = async (
   if (
     !poll ||
     moment().isAfter(poll.expiresAt) ||
-    !poll.options.includes(votedOption)
+    !poll.options.some((option) => option.text === votedOption) // ✅ Fix
   ) {
     return null;
   }
 
   const vote = await Vote.create({ pollId, votedOption });
 
-  // Update vote count (if options include an object with votes)
-  await Poll.findByIdAndUpdate(
-    pollId,
-    { $inc: { [`votes.${votedOption}`]: 1 } },
+  // Update the vote count correctly
+  await Poll.findOneAndUpdate(
+    { _id: pollId, "options.text": votedOption },
+    { $inc: { "options.$.votes": 1 } },
     { new: true }
   );
 

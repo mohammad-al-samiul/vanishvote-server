@@ -1,29 +1,32 @@
-import { TPoll } from "./poll.interface";
-import { Poll } from "./poll.model";
 import moment from "moment";
+import { IPoll } from "./poll.interface";
+import { Poll } from "./poll.model";
 
 const createPollIntoDB = async (
   question: string,
-  options: string[],
+  options: { text: string }[], // Ensure correct type
   expiresIn: number,
   privatePoll: boolean
-) => {
+): Promise<IPoll> => {
   const expiresAt = moment().add(expiresIn, "hours").toDate();
 
-  const pollData: TPoll = {
+  const formattedOptions = options.map((option) => ({
+    text: option.text,
+    votes: 0,
+  }));
+
+  const result = await Poll.create({
     question,
-    options,
+    options: formattedOptions,
     expiresAt,
     private: privatePoll,
-  };
+  });
 
-  const result = await Poll.create(pollData);
   return result;
 };
 
-const getPollById = async (pollId: string) => {
-  const poll = await Poll.findById(pollId);
-  return poll;
+const getPollById = async (pollId: string): Promise<IPoll | null> => {
+  return await Poll.findById(pollId);
 };
 
 export const PollServices = {
